@@ -129,13 +129,4 @@ jobs:
 
             ${{ steps.check_update_step.outputs.release_notes }}
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-          file_pattern: .```
-
-### 主要改动点
-
-唯一的改动在这里：
-
-**修改前:**
-```yaml
-  schedule:
-    - cron: "0 */3 * * *" # 修改为每3小时运行一次，以匹配上游更新频率
+          file_pattern: .
