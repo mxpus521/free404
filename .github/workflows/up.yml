@@ -5,7 +5,8 @@ on:
     branches:
       - main
   schedule:
-    - cron: "0 */3 * * *"
+    # 每天午夜 (UTC) 运行一次
+    - cron: "0 0 * * *"
   workflow_dispatch:
     inputs:
       force_update:
@@ -123,10 +124,18 @@ jobs:
         if: steps.check_update_step.outputs.updated == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          # 使用 YAML 的多行字符串格式 `|` 来构建更详细的提交信息
           commit_message: |
             🔄 自动同步 Worker 至 ${{ steps.check_update_step.outputs.remote_tag }}
 
             ${{ steps.check_update_step.outputs.release_notes }}
           commit_author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
-          file_pattern: .
+          file_pattern: .```
+
+### 主要改动点
+
+唯一的改动在这里：
+
+**修改前:**
+```yaml
+  schedule:
+    - cron: "0 */3 * * *" # 修改为每3小时运行一次，以匹配上游更新频率
